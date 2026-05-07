@@ -1,6 +1,6 @@
 # Logistics Routing MVP with PostGIS, pgRouting, Flask, and Leaflet
 
-This is a personal web mapping and GIS development project that I built to practice full-stack geospatial application development.
+This is a personal web mapping and GIS development project for full-stack geospatial application development.
 
 The main idea of this project is to create a small logistics routing system where a user can select a start point and end point on a map, add blocked zones, add traffic points, and then calculate possible route alternatives. The project uses OpenStreetMap road data, PostGIS, pgRouting, a Flask backend API, and a Leaflet frontend.
 
