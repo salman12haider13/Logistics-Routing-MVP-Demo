@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Logistics Routing Console</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="top-banner">
+        <div class="system-tag">MISSION ROUTING SYSTEM</div>
+        <h1>Logistics Routing Console</h1>
+        <div class="system-subtitle">Pakistan Operational Network</div>
+      </div>
+
+      <div class="panel">
+        <h3>Mission Procedure</h3>
+        <ol class="instruction-list">
+          <li>Set <strong>Point A</strong> on the map</li>
+          <li>Set <strong>Point B</strong> on the map</li>
+          <li>Optionally draw <strong>blocked zones</strong></li>
+          <li>Optionally place <strong>traffic points</strong></li>
+          <li>Select routing objective and vehicle type</li>
+          <li>Execute <strong>Find Route</strong></li>
+          <li>Click an alternate route to inspect it</li>
+        </ol>
+      </div>
+
+      <div class="panel">
+        <h3>Routing Objective</h3>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="mode" value="time" checked />
+            Minimum Time
+          </label>
+          <label>
+            <input type="radio" name="mode" value="distance" />
+            Minimum Distance
+          </label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Vehicle Profile</h3>
+        <label for="vehicle-select" class="select-label">Vehicle Type</label>
+        <select id="vehicle-select" class="military-select">
+          <option value="default" selected>Default</option>
+          <option value="light_utility">Light Utility</option>
+          <option value="medium_truck">Medium Truck</option>
+          <option value="heavy_transport">Heavy Transport</option>
+        </select>
+        <div class="small-note">
+          Placeholder for future vehicle restrictions, turning radius, dimensions, and suitability rules.
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Interaction Mode</h3>
+        <div class="button-panel wrap-buttons">
+          <button id="point-mode-btn" class="secondary active-mode-btn" type="button">
+            Point Placement
+          </button>
+          <button id="draw-zone-btn" class="secondary" type="button">
+            Draw Blocked Zone
+          </button>
+          <button id="traffic-mode-btn" class="secondary" type="button">
+            Add Traffic
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Mission Coordinates</h3>
+        <div class="data-row">
+          <span class="data-label">Point A</span>
+          <span id="start-coords" class="data-value">Not selected</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Point B</span>
+          <span id="end-coords" class="data-value">Not selected</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Blocked Zones</h3>
+        <div class="data-row">
+          <span class="data-label">Active Zones</span>
+          <span id="zone-count" class="data-value">0</span>
+        </div>
+        <div id="zone-list" class="obstacle-list empty-list">No blocked zones added</div>
+      </div>
+
+      <div class="panel">
+        <h3>Traffic Register</h3>
+        <div class="data-row">
+          <span class="data-label">Traffic Points</span>
+          <span id="traffic-count" class="data-value">0</span>
+        </div>
+        <div id="traffic-list" class="obstacle-list empty-list">No traffic points added</div>
+      </div>
+
+      <div class="panel">
+        <h3>Route Alternatives</h3>
+        <div id="route-options" class="route-options empty-list">No routes calculated</div>
+      </div>
+
+      <div class="panel button-panel wrap-buttons">
+        <button id="route-btn" type="button">Find Route</button>
+        <button id="clear-zones-btn" class="secondary" type="button">Clear Zones</button>
+        <button id="clear-traffic-btn" class="secondary" type="button">Clear Traffic</button>
+        <button id="reset-btn" class="secondary" type="button">Reset All</button>
+      </div>
+
+      <div class="panel">
+        <h3>Selected Route Summary</h3>
+        <div class="data-row">
+          <span class="data-label">Status</span>
+          <span id="status-text" class="data-value">Waiting for input</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Route</span>
+          <span id="summary-route-label" class="data-value">-</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Mode</span>
+          <span id="summary-mode" class="data-value">-</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vehicle</span>
+          <span id="summary-vehicle" class="data-value">Default</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Distance</span>
+          <span id="summary-distance" class="data-value">-</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Estimated Time</span>
+          <span id="summary-time" class="data-value">-</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Steps</span>
+          <span id="summary-steps" class="data-value">-</span>
+        </div>
+      </div>
+    </aside>
+
+    <main id="map-shell">
+      <div id="map"></div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
